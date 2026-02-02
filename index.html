@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zeltax Pro | iOS Installer</title>
+    <style>
+        :root {
+            --bg: #050505;
+            --card: #121212;
+            --accent: #007AFF; /* iOS Blue */
+            --text: #ffffff;
+            --secondary: #2c2c2e;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: var(--card);
+            width: 90%;
+            max-width: 400px;
+            padding: 2.5rem;
+            border-radius: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border: 1px solid var(--secondary);
+            text-align: center;
+        }
+
+        .icon-preview {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #007AFF, #00C7FF);
+            border-radius: 18px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            box-shadow: 0 10px 20px rgba(0,122,255,0.3);
+        }
+
+        h1 { font-size: 1.5rem; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
+        p { color: #8e8e93; font-size: 0.9rem; margin-bottom: 2rem; }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--secondary);
+            background: #1c1c1e;
+            color: white;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        input:focus { border-color: var(--accent); }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            border-radius: 14px;
+            border: none;
+            background: var(--accent);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        .download-zone {
+            margin-top: 20px;
+            display: none;
+            padding-top: 20px;
+            border-top: 1px solid var(--secondary);
+        }
+
+        .btn-download {
+            display: inline-block;
+            text-decoration: none;
+            color: var(--accent);
+            font-weight: bold;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="icon-preview">🚀</div>
+    <h1>Zeltax Config</h1>
+    <p>შექმენი საინსტალაციო პროფილი</p>
+    
+    <input type="text" id="ipaUrl" placeholder="Direct IPA URL (HTTPS)">
+    <input type="text" id="appName" placeholder="აპლიკაციის სახელი">
+    <input type="text" id="bundleId" placeholder="Bundle ID (e.g. com.dev.app)">
+
+    <button onclick="generateProfile()">პროფილის გენერაცია</button>
+
+    <div id="downloadZone" class="download-zone">
+        <p>პროფილი მზადაა დასაყენებლად:</p>
+        <a id="profileLink" class="btn-download" download="install.mobileconfig">⬇️ გადმოწერე პროფილი</a>
+    </div>
+</div>
+
+<script>
+    function generateProfile() {
+        const ipa = document.getElementById('ipaUrl').value;
+        const name = document.getElementById('appName').value;
+        const bid = document.getElementById('bundleId').value;
+
+        if(!ipa || !name || !bid) {
+            alert("გთხოვთ შეავსოთ ყველა ველი!");
+            return;
+        }
+
+        // 1. ვქმნით itms-services ბმულს
+        const itmsLink = `itms-services://?action=download-manifest&url=${ipa.replace('.ipa', '.plist')}`;
+
+        // 2. ვქმნით .mobileconfig ფაილს (XML)
+        // ეს პროფილი ქმნის "Web Clip"-ს, რომელიც დაჭერისას აინსტალირებს აპს
+        const profileContent = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>FullScreen</key>
+            <true/>
+            <key>IsRemovable</key>
+            <true/>
+            <key>Label</key>
+            <string>${name}</string>
+            <key>PayloadDescription</key>
+            <string>Zeltax App Installer</string>
+            <key>PayloadDisplayName</key>
+            <string>${name}</string>
+            <key>PayloadIdentifier</key>
+            <string>com.zeltax.install.${bid}</string>
+            <key>PayloadType</key>
+            <string>com.apple.webClip.managed</string>
+            <key>PayloadUUID</key>
+            <string>${crypto.randomUUID()}</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>URL</key>
+            <string>${itmsLink}</string>
+            <key>Icon</key>
+            <data>
+            </data>
+        </dict>
+    </array>
+    <key>PayloadDisplayName</key>
+    <string>Install ${name}</string>
+    <key>PayloadIdentifier</key>
+    <string>com.zeltax.profile</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>${crypto.randomUUID()}</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>`;
+
+        const blob = new Blob([profileContent], { type: 'application/x-apple-aspen-config' });
+        const url = window.URL.createObjectURL(blob);
+        
+        const link = document.getElementById('profileLink');
+        link.href = url;
+        link.download = `${name}.mobileconfig`;
+        
+        document.getElementById('downloadZone').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
