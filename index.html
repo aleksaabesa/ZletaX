@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeltaX Installer</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ZeltaX">
+    
+    <style>
+        :root {
+            --bg: #000000;
+            --accent: #007AFF;
+            --card: #1c1c1e;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: white;
+            font-family: -apple-system, system-ui, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .card {
+            background: var(--card);
+            padding: 40px;
+            border-radius: 30px;
+            text-align: center;
+            width: 80%;
+            max-width: 320px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            border: 1px solid #333;
+        }
+
+        .icon-box {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #007AFF, #00C7FF);
+            border-radius: 22px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            box-shadow: 0 8px 20px rgba(0,122,255,0.4);
+        }
+
+        h1 { font-size: 24px; margin: 10px 0; letter-spacing: -1px; }
+        p { color: #8e8e93; font-size: 14px; margin-bottom: 30px; }
+
+        .btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        /* ინსტრუქციის ანიმაცია */
+        .instruction {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #555;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="icon-box">Z</div>
+    <h1>ZeltaX</h1>
+    <p>დააინსტალირე აპი ეკრანზე</p>
+    
+    <a href="#" class="btn" onclick="downloadProfile()">გადმოწერა</a>
+
+    <div id="hint" class="instruction">
+        შემდეგ გადადი: Settings > Profile Downloaded
+    </div>
+</div>
+
+<script>
+    function downloadProfile() {
+        const currentUrl = window.location.href;
+        const appName = "ZeltaX";
+        
+        const profile = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>FullScreen</key>
+            <true/>
+            <key>IsRemovable</key>
+            <true/>
+            <key>Label</key>
+            <string>${appName}</string>
+            <key>PayloadDescription</key>
+            <string>ZeltaX Web App</string>
+            <key>PayloadDisplayName</key>
+            <string>${appName}</string>
+            <key>PayloadIdentifier</key>
+            <string>com.zeltax.app.clip</string>
+            <key>PayloadType</key>
+            <string>com.apple.webClip.managed</string>
+            <key>PayloadUUID</key>
+            <string>${crypto.randomUUID()}</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>URL</key>
+            <string>${currentUrl}</string>
+        </dict>
+    </array>
+    <key>PayloadDisplayName</key>
+    <string>${appName} Installer</string>
+    <key>PayloadIdentifier</key>
+    <string>com.zeltax.profile</string>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>${crypto.randomUUID()}</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>`;
+
+        const blob = new Blob([profile], { type: 'application/x-apple-aspen-config' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = "ZeltaX.mobileconfig";
+        link.click();
+        
+        document.getElementById('hint').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
