@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Store - ZeltaX</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        body { 
+            background: #000; 
+            color: #fff; 
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", sans-serif; 
+            display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0;
+        }
+
+        .iphone-screen {
+            width: 340px;
+            padding: 25px;
+            text-align: center;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Icon styling */
+        .app-icon-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 15px;
+        }
+
+        .icon { 
+            width: 100%; height: 100%; border-radius: 28px; 
+            background: #1c1c1e url('icon@2x.png') center/cover no-repeat;
+            /* თუ ფაილი საქაღალდეშია, გამოიყენე: url('ფაილები/icon@2x.png') */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 0.5px solid rgba(255,255,255,0.1);
+        }
+
+        h1 { font-size: 24px; margin: 10px 0 2px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        
+        /* ლურჯი Verified ნიშანი */
+        .verified-badge { width: 18px; height: 18px; fill: #007AFF; }
+
+        .dev-name { color: #007AFF; font-size: 15px; margin-bottom: 20px; display: block; font-weight: 400; }
+
+        .action-area {
+            background: #1c1c1e;
+            padding: 20px;
+            border-radius: 25px;
+            margin-top: 20px;
+            border: 1px solid #2c2c2e;
+        }
+
+        .btn { 
+            display: flex; align-items: center; justify-content: center;
+            padding: 14px; margin-top: 10px; border-radius: 30px; 
+            text-decoration: none; font-weight: 700; transition: 0.2s; font-size: 16px;
+        }
+
+        /* Apple Blue Button */
+        .btn-get { background: #007AFF; color: #fff; }
+        .btn-get:active { transform: scale(0.96); background: #005ecb; }
+
+        .btn-android { background: #34c759; color: #fff; margin-top: 15px; }
+
+        .info-row {
+            display: flex; justify-content: space-between;
+            margin-top: 25px; border-top: 0.5px solid #333; padding-top: 15px;
+        }
+
+        .info-item { text-align: center; flex: 1; }
+        .info-label { color: #8e8e93; font-size: 10px; text-transform: uppercase; margin-bottom: 4px; display: block; }
+        .info-value { font-size: 14px; font-weight: 600; color: #d1d1d6; }
+
+        .security-tag {
+            font-size: 11px; color: #34c759; margin-top: 20px;
+            display: flex; align-items: center; justify-content: center; gap: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="iphone-screen">
+        <div class="app-icon-container">
+            <div class="icon"></div>
+        </div>
+        
+        <h1>ZeltaX 
+            <svg class="verified-badge" viewBox="0 0 24 24"><path d="M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z"></path></svg>
+        </h1>
+        <span class="dev-name">ZeltaX Technologies</span>
+
+        <div class="info-row">
+            <div class="info-item">
+                <span class="info-label">Ratings</span>
+                <span class="info-value">4.9 ★</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Age</span>
+                <span class="info-value">4+</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Size</span>
+                <span class="info-value">24 MB</span>
+            </div>
+        </div>
+
+        <div class="action-area">
+            <a href="ZeltaX.mobileconfig" class="btn btn-get" onclick="celebrate()">GET FOR iOS</a>
+            <a href="https://www.webtonative.com/checkout/6980da571a53514101a96f52" class="btn btn-android" onclick="celebrate()">GET FOR ANDROID</a>
+        </div>
+
+        <div class="security-tag">
+            <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.775 11.775 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.777 11.777 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zM7.5 5h1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5zM8 10a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1z"/></svg>
+            Apple Security Verified
+        </div>
+    </div>
+
+    <script>
+        function celebrate() {
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.8 } });
+        }
+    </script>
+
+</body>
+</html>
