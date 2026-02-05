@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeltaX Installer</title>
+    <style>
+        /* გვერდის გამოჩენის ანიმაცია */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        body { 
+            background: #000; 
+            color: #fff; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            overflow: hidden;
+        }
+
+        .card { 
+            background: rgba(28, 28, 30, 0.8); 
+            backdrop-filter: blur(25px); 
+            -webkit-backdrop-filter: blur(25px);
+            padding: 40px; 
+            border-radius: 40px; 
+            text-align: center; 
+            width: 300px; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .icon { 
+            width: 110px; 
+            height: 110px; 
+            border-radius: 24px; 
+            margin: 0 auto 20px; 
+            background-image: url('icon@2x.png'); 
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        h1 { margin: 10px 0 5px; font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
+        p { color: #a1a1a6; font-size: 14px; margin-bottom: 30px; }
+
+        .btn { 
+            display: block; 
+            padding: 16px; 
+            margin-top: 12px; 
+            border-radius: 14px; 
+            text-decoration: none; 
+            font-weight: 600; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            border: none; 
+            cursor: pointer; 
+            font-size: 15px; 
+            text-align: center; 
+        }
+
+        /* iOS სტილი */
+        .btn-ios { background: #007AFF; color: white; box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3); }
+        .btn-ios:hover { background: #0062cc; transform: scale(1.03); }
+
+        /* Android სტილი */
+        .btn-android { background: #3DDC84; color: #000; }
+        .btn-android:hover { background: #32b36c; transform: scale(1.03); }
+
+        /* სხვა ღილაკები */
+        .btn-secondary { background: #2c2c2e; color: #fff; border: 1px solid #3d3d3f; }
+        .btn-secondary:hover { background: #3a3a3c; }
+
+        .btn-tg { color: #24A1DE !important; border-color: rgba(36, 161, 222, 0.3); }
+
+        .btn:active { transform: scale(0.96); }
+
+        /* "ჭკვიანი" ფოკუსი - ამას JS მართავს */
+        .highlight { border: 2px solid #fff !important; }
+
+        .footer-text { margin-top: 25px; font-size: 11px; color: #636366; text-transform: uppercase; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="icon"></div>
+        <h1>ZeltaX</h1>
+        <p id="platform-text">აირჩიეთ პლატფორმა</p>
+        
+        <div id="buttons-container">
+            <a href="ZeltaX.mobileconfig" id="ios-btn" class="btn btn-ios">INSTALL FOR IOS</a>
+            <a href="ZeltaX.apk" id="android-btn" class="btn btn-android">DOWNLOAD ANDROID</a>
+            <a href="ZeltaX_Files.zip" class="btn btn-secondary">DOWNLOAD ZIP</a>
+            <a href="https://t.me/შენი_არხი" class="btn btn-secondary btn-tg">JOIN TELEGRAM</a>
+        </div>
+
+        <div class="footer-text">Powered by ZeltaX</div>
+    </div>
+
+    <script>
+        // მოწყობილობის ამოცნობის ფუნქცია
+        function detectOS() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            const iosBtn = document.getElementById('ios-btn');
+            const androidBtn = document.getElementById('android-btn');
+            const platformText = document.getElementById('platform-text');
+
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                // თუ მომხმარებელი iOS-ზეა
+                platformText.innerText = "რეკომენდებულია თქვენი iPhone-ისთვის";
+                iosBtn.classList.add('highlight');
+                // iOS ღილაკი ავიტანოთ პირველ ადგილზე
+                iosBtn.parentNode.prepend(iosBtn);
+            } else if (/android/i.test(userAgent)) {
+                // თუ მომხმარებელი Android-ზეა
+                platformText.innerText = "რეკომენდებულია თქვენი Android-ისთვის";
+                androidBtn.classList.add('highlight');
+                // Android ღილაკი ავიტანოთ პირველ ადგილზე
+                androidBtn.parentNode.prepend(androidBtn);
+            }
+        }
+
+        // გაშვება ჩატვირთვისას
+        window.onload = detectOS;
+    </script>
+
+</body>
+</html>
