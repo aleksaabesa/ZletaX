@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeltaX Store</title>
+    <style>
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        body { 
+            background: #000; color: #fff; font-family: -apple-system, sans-serif; 
+            display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; 
+        }
+
+        .card { 
+            background: #1c1c1e; padding: 30px; border-radius: 40px; text-align: center; 
+            width: 320px; border: 1px solid #333; animation: fadeIn 0.8s ease-out;
+        }
+
+        .icon { 
+            width: 90px; height: 90px; border-radius: 20px; margin: 0 auto 15px; 
+            background: url('icon@2x.png') center/cover; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+
+        .rating { color: #ff9500; font-size: 14px; margin-bottom: 20px; }
+
+        /* სკრინშოტების სლაიდერი */
+        .screenshots { 
+            display: flex; gap: 10px; overflow-x: auto; margin-bottom: 25px; padding-bottom: 10px;
+            scrollbar-width: none; /* Firefox */
+        }
+        .screenshots::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+        
+        .screenshots img { 
+            width: 120px; height: 200px; border-radius: 12px; object-fit: cover; 
+            background: #2c2c2e; border: 1px solid #444;
+        }
+
+        .btn { 
+            display: block; padding: 16px; margin-top: 10px; border-radius: 15px; 
+            text-decoration: none; font-weight: 700; transition: 0.3s; font-size: 15px;
+            position: relative; overflow: hidden;
+        }
+
+        .btn-main { background: #007AFF; color: white; }
+        
+        /* პროგრეს ბარის ანიმაცია */
+        .progress-overlay {
+            position: absolute; left: 0; top: 0; height: 100%; width: 0%;
+            background: rgba(255,255,255,0.2); transition: width 2s;
+        }
+
+        .btn-secondary { background: #2c2c2e; color: #007AFF; margin-top: 10px; }
+        
+        .footer { margin-top: 20px; font-size: 10px; color: #636366; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="icon"></div>
+        <h1>ZeltaX</h1>
+        <div class="rating">★★★★★ 4.9 • 12K Ratings</div>
+
+        <div class="screenshots">
+            <img src="screen1.png" alt="Screen 1">
+            <img src="screen2.png" alt="Screen 2">
+            <img src="screen3.png" alt="Screen 3">
+        </div>
+
+        <a href="ZeltaX.mobileconfig" class="btn btn-main" onclick="startLoading(this)">
+            <span class="progress-overlay"></span>
+            <span class="text">GET / INSTALL</span>
+        </a>
+
+        <a href="ZeltaX.apk" class="btn btn-secondary">ANDROID VERSION</a>
+        <a href="https://t.me/your_channel" class="btn btn-secondary" style="color:#24A1DE">TELEGRAM CHANNEL</a>
+
+        <div class="footer">DEVELOPER: ZELTAX TEAM</div>
+    </div>
+
+    <script>
+        function startLoading(btn) {
+            const progress = btn.querySelector('.progress-overlay');
+            const text = btn.querySelector('.text');
+            text.innerText = "Installing...";
+            progress.style.width = "100%";
+            
+            // 2 წამში დააბრუნებს ტექსტს, მაგრამ ფაილს მაინც გადმოწერს
+            setTimeout(() => {
+                text.innerText = "OPENING...";
+            }, 2000);
+        }
+    </script>
+
+</body>
+</html>
