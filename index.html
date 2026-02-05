@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeltaX Official</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="icon@2x.png..PNG">
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        body { 
+            background: #000; color: #fff; 
+            font-family: -apple-system, system-ui, sans-serif; 
+            display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0;
+        }
+
+        .container { width: 100%; max-width: 350px; padding: 20px; text-align: center; }
+
+        .app-icon {
+            width: 110px; height: 110px; border-radius: 25px;
+            margin: 0 auto 15px;
+            background-image: url('icon@2x.png..PNG');
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            border: 0.5px solid rgba(255,255,255,0.1);
+        }
+
+        h1 { font-size: 26px; margin: 0; font-weight: 700; }
+        .category { color: #8e8e93; font-size: 14px; margin-bottom: 25px; display: block; }
+
+        .btn-container { background: #1c1c1e; padding: 20px; border-radius: 25px; border: 1px solid #2c2c2e; }
+
+        .btn {
+            display: block; padding: 14px; border-radius: 25px;
+            text-decoration: none; font-weight: 700; font-size: 16px;
+            margin-bottom: 12px; transition: 0.2s; text-align: center;
+        }
+
+        .btn-ios { background: #007AFF; color: #fff; }
+        .btn-android { background: #34c759; color: #fff; }
+        .btn-manifest { background: rgba(255,255,255,0.1); color: #fff; font-size: 13px; }
+        
+        .btn:active { transform: scale(0.96); }
+
+        .trust-badge { margin-top: 20px; color: #34c759; font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 5px; }
+
+        /* ახალი სკანირების ანიმაციის სტილი */
+        #scanner {
+            display: none;
+            font-size: 13px;
+            color: #007AFF;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        /* ინსტრუქციის სტილი */
+        .steps {
+            text-align: left;
+            margin-top: 25px;
+            padding: 0 10px;
+            opacity: 0.6;
+        }
+        .steps p { font-size: 12px; font-weight: bold; margin-bottom: 8px; color: #8e8e93; }
+        .steps ol { font-size: 11px; padding-left: 18px; color: #8e8e93; margin: 0; }
+        .steps li { margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="app-icon"></div>
+        <h1>ZeltaX</h1>
+        <span class="category">Official Installer</span>
+
+        <div id="scanner">🛡️ Scanning for security threats...</div>
+
+        <div class="btn-container">
+            <a href="ZeltaX.mobileconfig" class="btn btn-ios" onclick="handleDownload(event, 'ios')">GET IOS PROFILE</a>
+            <a href="https://www.webtonative.com/checkout/6980da571a53514101a96f52" class="btn btn-android" onclick="handleDownload(event, 'android')">GET ANDROID APP</a>
+            <a href="android-app-manifest.json" class="btn btn-manifest">VIEW MANIFEST</a>
+        </div>
+
+        <div class="steps">
+            <p>INSTALLATION GUIDE:</p>
+            <ol>
+                <li>Tap "GET" and allow profile download.</li>
+                <li>Open <b>Settings</b> > <b>Profile Downloaded</b>.</li>
+                <li>Tap <b>Install</b> and enter your passcode.</li>
+            </ol>
+        </div>
+
+        <div class="trust-badge">Verified by ZeltaX Security</div>
+    </div>
+
+    <script>
+        function handleDownload(event, platform) {
+            event.preventDefault(); // ვაჩერებთ გადმოწერას წამიერად
+            const link = event.currentTarget.href;
+            const scanner = document.getElementById('scanner');
+            
+            scanner.style.display = 'block'; // ვაჩვენებთ სკანირებას
+            
+            // კონფეტი მაშინვე
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.8 } });
+
+            // 1.5 წამში გადადის გადმოწერაზე
+            setTimeout(() => {
+                scanner.innerHTML = "✅ Secure connection established!";
+                setTimeout(() => {
+                    window.location.href = link;
+                }, 500);
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
