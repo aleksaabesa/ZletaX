@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeltaX Official</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="icon.png">
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        body { 
+            background: #000; color: #fff; 
+            font-family: -apple-system, system-ui, sans-serif; 
+            display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0;
+            padding-top: 50px;
+        }
+
+        .container { width: 100%; max-width: 350px; padding: 20px; text-align: center; }
+
+        .app-icon {
+            width: 110px; height: 110px; border-radius: 25px;
+            margin: 0 auto 15px;
+            background-image: url('icon.png');
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            border: 0.5px solid rgba(255,255,255,0.1);
+        }
+
+        h1 { font-size: 26px; margin: 0; font-weight: 700; }
+        .category { color: #8e8e93; font-size: 14px; margin-bottom: 25px; display: block; }
+
+        .btn-container { background: #1c1c1e; padding: 20px; border-radius: 25px; border: 1px solid #2c2c2e; }
+
+        .btn {
+            display: block; padding: 14px; border-radius: 25px;
+            text-decoration: none; font-weight: 700; font-size: 16px;
+            margin-bottom: 12px; transition: 0.2s; text-align: center;
+        }
+
+        .btn-ios { background: #007AFF; color: #fff; }
+        .btn-android { background: #34c759; color: #fff; }
+        .btn-manifest { background: rgba(255,255,255,0.1); color: #fff; font-size: 13px; }
+        
+        .btn:active { transform: scale(0.96); }
+
+        #scanner { display: none; font-size: 13px; color: #007AFF; margin-bottom: 15px; font-weight: 500; }
+
+        .trust-badge { margin-top: 20px; color: #34c759; font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 5px; }
+
+        /* ახალი სექციების სტილები - დიზაინის შეცვლის გარეშე */
+        .section-title { text-align: left; font-size: 12px; color: #8e8e93; font-weight: bold; text-transform: uppercase; margin: 25px 0 10px 10px; }
+        
+        .features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .feature-box { background: #1c1c1e; padding: 15px; border-radius: 15px; text-align: left; border: 0.5px solid #2c2c2e; }
+        .feature-box b { display: block; font-size: 13px; margin-bottom: 4px; color: #34c759; }
+        .feature-box span { font-size: 11px; color: #8e8e93; }
+
+        .screenshots { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 10px; scrollbar-width: none; }
+        .screenshot-item { min-width: 140px; height: 250px; background: #1c1c1e; border-radius: 15px; border: 0.5px solid #2c2c2e; display: flex; align-items: center; justify-content: center; color: #444; font-size: 10px; }
+
+        footer { margin: 40px 0 20px; font-size: 10px; color: #444; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="app-icon"></div>
+        <h1>ZeltaX</h1>
+        <span class="category">Official Installer</span>
+
+        <div id="scanner">🛡️ Scanning for security threats...</div>
+
+        <div class="btn-container">
+            <a href="ZeltaX.mobileconfig" class="btn btn-ios" onclick="handleDownload(event)">GET IOS PROFILE</a>
+            <a href="https://www.webtonative.com/checkout/6980da571a53514101a96f52" class="btn btn-android" onclick="handleDownload(event)">GET ANDROID APP</a>
+            <a href="android-app-manifest.json" class="btn btn-manifest">VIEW MANIFEST</a>
+        </div>
+
+        <div class="trust-badge">Verified by ZeltaX Security</div>
+
+        <p class="section-title">Features</p>
+        <div class="features-grid">
+            <div class="feature-box">
+                <b>Secure</b>
+                <span>End-to-end encrypted downloads.</span>
+            </div>
+            <div class="feature-box">
+                <b>Fast</b>
+                <span>No speed limits on servers.</span>
+            </div>
+        </div>
+
+        <p class="section-title">App Preview</p>
+        <div class="screenshots">
+            <div class="screenshot-item">SCREENSHOT 1</div>
+            <div class="screenshot-item">SCREENSHOT 2</div>
+            <div class="screenshot-item">SCREENSHOT 3</div>
+        </div>
+
+        <footer>
+            © 2026 ZeltaX Store. All rights reserved.
+        </footer>
+    </div>
+
+    <script>
+        function handleDownload(event) {
+            event.preventDefault();
+            const link = event.currentTarget.href;
+            const scanner = document.getElementById('scanner');
+            scanner.style.display = 'block';
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.8 } });
+            
+            setTimeout(() => {
+                scanner.innerHTML = "✅ Secure connection established!";
+                setTimeout(() => { window.location.href = link; }, 500);
+            }, 1500);
+        }
+
+        // Service Worker რეგისტრაცია Notification-ისთვის
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
+</body>
+</html>
